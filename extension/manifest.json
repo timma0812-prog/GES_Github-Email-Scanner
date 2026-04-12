@@ -1,0 +1,25 @@
+{
+  "manifest_version": 3,
+  "name": "GitHub Contributor Email Scanner",
+  "version": "0.1.0",
+  "permissions": ["storage", "tabs", "scripting"],
+  "host_permissions": [
+    "https://github.com/*",
+    "https://patch-diff.githubusercontent.com/*"
+  ],
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "action": {
+    "default_title": "GitHub Email Scanner",
+    "default_popup": "popup.html"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://github.com/*"],
+      "js": ["content.runtime.js"],
+      "run_at": "document_idle"
+    }
+  ]
+}

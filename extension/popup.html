@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>GitHub 邮箱扫描器</title>
+    <link rel="stylesheet" href="popup.css" />
+  </head>
+  <body>
+    <main class="popup">
+      <section class="controls">
+        <button id="start-btn" type="button">开始扫描</button>
+        <button id="pause-btn" type="button">暂停</button>
+        <button id="resume-btn" type="button">继续</button>
+        <button id="export-btn" type="button">导出 CSV</button>
+      </section>
+      <section class="mode-control">
+        <label>
+          <input id="risk-mode-toggle" type="checkbox" />
+          低风控模式
+        </label>
+        <span id="risk-mode-text">模式：标准</span>
+      </section>
+      <section class="mode-control">
+        <label>
+          <input id="compliance-confirm-toggle" type="checkbox" checked />
+          启动前二次合规确认
+        </label>
+      </section>
+      <p id="status-text">状态：空闲</p>
+      <p id="progress-text">目标总数：0｜已处理：0｜已匹配：0｜当前：无</p>
+      <p id="reason-text">原因：无</p>
+      <p class="notice">仅处理 GitHub 公开页面信息；请遵守平台条款及适用法律，不要用于骚扰式联系。</p>
+      <table>
+        <thead>
+          <tr>
+            <th>contributor_login</th>
+            <th>email</th>
+            <th>source_type</th>
+            <th>source_url</th>
+            <th>extracted_at</th>
+          </tr>
+        </thead>
+        <tbody id="results-body"></tbody>
+      </table>
+    </main>
+    <script type="module" src="popup.js"></script>
+  </body>
+</html>
