@@ -65,21 +65,24 @@ It is designed for teams that need structured outreach intelligence with clear b
 ```mermaid
 flowchart TD
     A[Open Repo Root / 打开仓库主页] --> B[Collect Top 50 Contributors / 抓取前50贡献者]
-    B --> C{Per Contributor / 每位贡献者}
-    C --> D[Try up to 3 PR patch URLs / 最多尝试3条PR.patch]
-    D --> E{Non-noreply email found? / 命中非noreply?}
-    E -- Yes --> F[Save row and next contributor / 保存并处理下一位]
-    E -- No --> G[Fallback to up to 3 commit patch URLs / 回退最多3条commit.patch]
-    G --> H{Non-noreply email found? / 命中非noreply?}
-    H -- Yes --> F
-    H -- No --> I[Skip contributor / 跳过该贡献者]
-    D --> J{429 or Challenge? / 触发429或人机验证?}
-    G --> J
-    J -- Yes --> K[Auto Pause / 自动暂停]
-    K --> L[Manual Resume / 手动继续]
-    L --> C
-    F --> C
-    I --> C
+    B --> C[Start contributor loop / 进入贡献者循环]
+    C --> D[Probe <=3 PR.patch / 最多探测3条PR.patch]
+    D --> E{429 or challenge? / 触发429或验证?}
+    E -- Yes --> F[Auto pause / 自动暂停]
+    F --> G[Manual resume / 手动继续]
+    G --> C
+    E -- No --> H{Valid non-noreply email? / 命中有效非noreply?}
+    H -- Yes --> I[Save row / 保存结果]
+    H -- No --> J[Probe <=3 commit.patch / 最多探测3条commit.patch]
+    J --> K{429 or challenge? / 触发429或验证?}
+    K -- Yes --> F
+    K -- No --> L{Valid non-noreply email? / 命中有效非noreply?}
+    L -- Yes --> I
+    L -- No --> M[Skip contributor / 跳过贡献者]
+    I --> N{More contributors? / 还有贡献者?}
+    M --> N
+    N -- Yes --> C
+    N -- No --> O[Done / 完成]
 ```
 
 ---
@@ -214,6 +217,6 @@ tests/
 
 ## License | 许可证
 
-License is not declared yet.
+Licensed under the [MIT License](LICENSE).
 
-暂未声明正式许可证（建议后续补充 `LICENSE` 文件）。
+本项目采用 [MIT License](LICENSE)。
